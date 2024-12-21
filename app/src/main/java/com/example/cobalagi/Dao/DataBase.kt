@@ -17,6 +17,14 @@ abstract class dataBase : RoomDatabase()
         @Volatile
         private var INSTANCE: kuliah? = null
 
-
+        fun getDatabase(context: Context): kuliah {
+            return INSTANCE ?: synchronized(this) {
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    kuliah::class.java, // Class database
+                    "kuliah" // Nama database
+                ).build().also { INSTANCE = it }
+            }
+        }
     }
 }
